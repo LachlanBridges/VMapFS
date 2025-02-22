@@ -45,9 +45,9 @@ RUN groupadd -g ${PGID} mediauser && \
 
 # Configure FUSE and directories
 RUN echo "user_allow_other" >> /etc/fuse.conf \
-    && mkdir -p /mnt/zurg /mnt/media /data \
-    && chown ${PUID}:${PGID} /mnt/zurg /mnt/media /data \
-    && chmod 775 /mnt/zurg /mnt/media /data
+    && mkdir -p /mnt/zurg /mnt/media /data /app /app/logs \
+    && chown ${PUID}:${PGID} /mnt/zurg /mnt/media /data /app /app/logs \
+    && chmod 775 /mnt/zurg /mnt/media /data /app /app/logs
 
 # Configure rclone
 RUN mkdir -p /home/mediauser/.config/rclone && \

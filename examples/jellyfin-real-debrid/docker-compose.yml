@@ -17,7 +17,6 @@ services:
       - ./data:/data
       - ./cache:/cache
       - ./logs:/logs
-      - ./zurg:/app
     ports:
       - "8096:8096"
       - "8920:8920"
