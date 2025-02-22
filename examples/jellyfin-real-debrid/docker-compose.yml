@@ -1,0 +1,30 @@
+version: "3.5"
+
+services:
+  mediaserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mediaserver
+    user: ${PUID}:${PGID}
+    environment:
+      - RD_TOKEN=${RD_TOKEN}
+      - TZ=${TZ:-UTC}  # Fallback to UTC if TZ not set
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - ./config:/config
+      - ./data:/data
+      - ./cache:/cache
+      - ./logs:/logs
+      - ./zurg:/app
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
