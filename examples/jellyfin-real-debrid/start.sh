@@ -27,6 +27,15 @@ fi
 PUID=${PUID:-1500}
 PGID=${PGID:-1500}
 
+# Check for FileBot license mount
+if [ -f /data/filebot/filebot.psm ]; then
+    echo "FileBot license detected, enabling FileBot processing"
+    export HAS_FILEBOT=1
+else
+    echo "No FileBot license detected, disabling FileBot processing"
+    export HAS_FILEBOT=0
+fi
+
 # Ensure /app/logs exists and is writable
 echo "Preparing Zurg directories..."
 mkdir -p /app/logs
@@ -37,7 +46,8 @@ ls -ld /app /app/logs
 echo "Starting Zurg..."
 cp /app/config.yml.template /app/config.yml
 sed -i "s/\${RD_TOKEN}/${RD_TOKEN}/g" /app/config.yml
-cd /app && /usr/local/bin/zurg --config /app/config.yml &  # Explicit working dir
+whoami  # Debug: Confirm user
+cd /app && /usr/local/bin/zurg --config /app/config.yml &
 ZURG_PID=$!
 
 echo "Waiting for Zurg..."

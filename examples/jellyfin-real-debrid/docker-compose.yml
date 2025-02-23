@@ -1,3 +1,4 @@
+
 version: "3.5"
 
 services:
@@ -9,14 +10,16 @@ services:
     user: ${PUID}:${PGID}
     environment:
       - RD_TOKEN=${RD_TOKEN}
-      - TZ=${TZ:-UTC}  # Fallback to UTC if TZ not set
+      - TZ=${TZ:-UTC}
       - PUID=${PUID}
       - PGID=${PGID}
+      - JELLYFIN_TOKEN=${JELLYFIN_TOKEN:-}  # Optional, defaults to empty
     volumes:
       - ./config:/config
       - ./data:/data
       - ./cache:/cache
       - ./logs:/logs
+      - ./filebot:/data/filebot  # Optional FileBot license and groovy files
     ports:
       - "8096:8096"
       - "8920:8920"

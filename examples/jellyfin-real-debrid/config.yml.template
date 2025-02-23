@@ -17,3 +17,4 @@ force_ipv6: false
 rate_limit_sleep_secs: 6
 realdebrid_timeout_secs: 60
 retries_until_failed: 5
+on_library_update: sh /app/update_library.sh "$@"
